@@ -4,6 +4,18 @@ const Button = ({ onClick, text }) => {
   return <button onClick={onClick}>{text}</button>
 }
 
+const Anecdote = ({ text, votes }) => {
+  if (!text) {
+    return <p>Nothing to see here yet</p>
+  }
+  return (
+    <div>
+      <p>{text}</p>
+      <p>has {votes ? votes : 0} votes</p>
+    </div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -33,12 +45,27 @@ const App = () => {
     }
   }
 
+  const getMostVoted = () => {
+    let mostVoted = -1;
+    for (const key in votes) {
+      if (votes[key] > mostVoted) {
+        mostVoted = key;
+      }
+    }
+    return mostVoted;
+  }
+
+  const mostVoted = getMostVoted();
+
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected] ? votes[selected] : 0} votes</p>
+      <h1>Anecdotes</h1>
+      <h2>Anecdote of the day</h2>
+      <Anecdote text={anecdotes[selected]} votes={votes[selected]}></Anecdote>
       <Button text="vote" onClick={handleVoteClick}></Button>
       <Button text="next anecdote" onClick={handleNextClick}></Button>
+      <h2>Anecdote with most votes</h2>
+      <Anecdote text={anecdotes[mostVoted]} votes={votes[mostVoted]}></Anecdote>
     </div>
   )
 }
