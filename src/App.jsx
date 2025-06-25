@@ -27,15 +27,16 @@ const App = () => {
 
   const handleVoteClick = () => {
     if (!votes[selected]) {
-      setVotes({ ...votes, selected: 1 });
+      setVotes({ ...votes, [selected]: 1 });
     } else {
-      setVotes({ ...votes, selected: votes[selected] + 1 });
+      setVotes({ ...votes, [selected]: votes[selected] + 1 });
     }
   }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected] ? votes[selected] : 0} votes</p>
       <Button text="vote" onClick={handleVoteClick}></Button>
       <Button text="next anecdote" onClick={handleNextClick}></Button>
     </div>
